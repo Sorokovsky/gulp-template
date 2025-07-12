@@ -1,19 +1,20 @@
 import webpack from "webpack-stream";
+import { gulp, isDev, path, plugins } from "../config/index.js";
 
 export const js = () => {
-    return app.gulp.src(app.path.src.js, { sourcemaps: app.isDev })
-        .pipe(app.plugins.plumber(
-            app.plugins.notify.onError({
+    return gulp.src(path.src.js, { sourcemaps: isDev })
+        .pipe(plugins.plumber(
+            plugins.notify.onError({
                 title: "JS",
                 message: "Error: <%= error.message %>"
             })
         ))
         .pipe(webpack({
-            mode: app.isDev ? "development" : "production",
+            mode: isDev ? "development" : "production",
             output: {
-                filename: "app.min.js"
+                filename: "min.js"
             },
         }))
-        .pipe(app.gulp.dest(app.path.build.js))
-        .pipe(app.plugins.browserSync.stream());
+        .pipe(gulp.dest(path.build.js))
+        .pipe(plugins.browserSync.stream());
 };

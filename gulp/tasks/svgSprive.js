@@ -1,9 +1,10 @@
 import svgSprite from "gulp-svg-sprite";
+import { path, plugins, gulp } from "../config/index.js";
 
 export const svgSprive = () => {
-    return app.gulp.src(app.path.src.svgicons, {})
-        .pipe(app.plugins.plumber(
-            app.plugins.notify.onError({
+    return gulp.src(path.src.svgicons, {})
+        .pipe(plugins.plumber(
+            plugins.notify.onError({
                 title: "SVG",
                 message: "Error: <%= error.message %>"
             })
@@ -16,5 +17,5 @@ export const svgSprive = () => {
                 }
             }
         }))
-        .pipe(app.gulp.dest(app.path.build.images));
+        .pipe(gulp.dest(path.build.images));
 };

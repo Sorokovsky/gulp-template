@@ -1,21 +1,22 @@
 import fileinclude from "gulp-file-include";
 import webpHtmlNosvg from "gulp-webp-html-nosvg";
 import versionNumber from "gulp-version-number";
+import { gulp, path, isBuild, plugins } from "../config/index.js";
 
 export const html = () => {
-    return app.gulp.src(app.path.src.html)
-        .pipe(app.plugins.plumber(
-            app.plugins.notify.onError({
+    return gulp.src(path.src.html)
+        .pipe(plugins.plumber(
+            plugins.notify.onError({
                 title: "Html",
                 message: "Error: <%= error.message %>"
             })
         ))
         .pipe(fileinclude())
-        .pipe(app.plugins.replace(/@img\//g, "img/"))
-        .pipe(app.plugins.if(app.isBuild, webpHtmlNosvg()))
+        .pipe(plugins.replace(/@img\//g, "img/"))
+        .pipe(plugins.if(isBuild, webpHtmlNosvg()))
         .pipe(
-            app.plugins.if(
-                app.isBuild,
+            plugins.if(
+                isBuild,
                 versionNumber({
                     value: '%DT%',
                     append: {
@@ -27,6 +28,6 @@ export const html = () => {
                         "file": "gulp/version.json"
                     }
                 })))
-        .pipe(app.gulp.dest(app.path.build.html))
-        .pipe(app.plugins.browserSync.stream());
+        .pipe(gulp.dest(path.build.html))
+        .pipe(plugins.browserSync.stream());
 };

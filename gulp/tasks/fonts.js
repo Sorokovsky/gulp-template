@@ -1,11 +1,12 @@
 import fs from "node:fs";
 import fonter from "gulp-fonter";
 import ttf2woff2 from "gulp-ttf2woff2";
+import { gulp, path, plugins } from "../config/index.js";
 
 export const otfToTtf = () => {
-    return app.gulp.src(`${app.path.srcFolder}/fonts/*.otf`, {})
-        .pipe(app.plugins.plumber(
-            app.plugins.notify.onError({
+    return gulp.src(`${path.srcFolder}/fonts/*.otf`, {})
+        .pipe(plugins.plumber(
+            plugins.notify.onError({
                 title: "Fonts",
                 message: "Error: <%= error.message %>"
             })
@@ -13,13 +14,13 @@ export const otfToTtf = () => {
         .pipe(fonter({
             formats: ["ttf"]
         }))
-        .pipe(app.gulp.dest(`${app.path.srcFolder}/fonts/`));
+        .pipe(gulp.dest(`${path.srcFolder}/fonts/`));
 };
 
 export const ttfToWoff = () => {
-    return app.gulp.src(`${app.path.srcFolder}/fonts/*.ttf`, {})
-        .pipe(app.plugins.plumber(
-            app.plugins.notify.onError({
+    return gulp.src(`${path.srcFolder}/fonts/*.ttf`, {})
+        .pipe(plugins.plumber(
+            plugins.notify.onError({
                 title: "Fonts",
                 message: "Error: <%= error.message %>"
             })
@@ -27,15 +28,15 @@ export const ttfToWoff = () => {
         .pipe(fonter({
             formats: ["woff"]
         }))
-        .pipe(app.gulp.dest(app.path.build.fonts))
-        .pipe(app.gulp.src(`${app.path.srcFolder}/fonts/*.ttf`))
+        .pipe(gulp.dest(path.build.fonts))
+        .pipe(gulp.src(`${path.srcFolder}/fonts/*.ttf`))
         .pipe(ttf2woff2())
-        .pipe(app.gulp.dest(app.path.build.fonts));
+        .pipe(gulp.dest(path.build.fonts));
 };
 
 export const fontsStyle = () => {
-    let fontsFile = `${app.path.srcFolder}/sass/fonts.sass`
-    fs.readdir(app.path.build.fonts, function (err, fontsFiles) {
+    let fontsFile = `${path.srcFolder}/sass/fonts.sass`
+    fs.readdir(path.build.fonts, function (err, fontsFiles) {
         if (fontsFiles) {
             if (!fs.existsSync(fontsFile)) {
                 fs.writeFile(fontsFile, "", cb);
@@ -91,6 +92,6 @@ export const fontsStyle = () => {
         }
     });
 
-    return app.gulp.src(app.path.srcFolder);
+    return gulp.src(path.srcFolder);
     function cb() { };
 };

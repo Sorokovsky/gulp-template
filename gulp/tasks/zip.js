@@ -1,15 +1,16 @@
 import { deleteAsync } from "del";
 import zipPlugin from "gulp-zip";
+import { gulp, path, plugins } from "../config/index.js";
 
 export const zip = () => {
-    deleteAsync([`./${app.path.rootFolder}.zip`])
-    return app.gulp.src(`${app.path.clean}/**/*.*`, {})
-        .pipe(app.plugins.plumber(
-            app.plugins.notify.onError({
+    deleteAsync([`./${path.rootFolder}.zip`])
+    return gulp.src(`${path.clean}/**/*.*`, {})
+        .pipe(plugins.plumber(
+            plugins.notify.onError({
                 title: "Zip",
                 message: "Error: <% error.message %>"
             })
         ))
-        .pipe(zipPlugin(`${app.path.rootFolder}.zip`))
-        .pipe(app.gulp.dest("./"));
+        .pipe(zipPlugin(`${path.rootFolder}.zip`))
+        .pipe(gulp.dest("./"));
 };

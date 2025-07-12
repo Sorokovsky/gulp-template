@@ -1,5 +1,6 @@
+import { gulp, path, plugins } from "../config/index.js";
 export const copy = () => {
-    return app.gulp.src(app.path.src.files)
-        .pipe(app.gulp.dest(app.path.build.files))
-        .pipe(app.plugins.browserSync.stream());
+    return gulp.src(path.src.files)
+        .pipe(gulp.dest(path.build.files))
+        .pipe(plugins.browserSync.stream());
 };

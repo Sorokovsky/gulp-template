@@ -1,5 +1,6 @@
-import {deleteAsync} from "del";
+import { deleteAsync } from "del";
+import { path } from "../config/index.js";
 
 export const reset = () => {
-    return deleteAsync([app.path.clean]);
+    return deleteAsync([path.clean]);
 };

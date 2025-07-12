@@ -1,5 +1,3 @@
-import gulp from 'gulp';
-import { path } from "./gulp/config/path.js";
 import { copy } from "./gulp/tasks/copy.js";
 import { reset } from "./gulp/tasks/reset.js";
 import { html } from "./gulp/tasks/html.js";
@@ -10,17 +8,7 @@ import { images } from "./gulp/tasks/images.js";
 import { svgSprive } from "./gulp/tasks/svgSprive.js";
 import { fontsStyle, otfToTtf, ttfToWoff } from "./gulp/tasks/fonts.js";
 import { zip } from "./gulp/tasks/zip.js";
-import { plugins } from "./gulp/config/plugins.js";
-
-const buildFlag = "--build";
-
-global.app = {
-    path: path,
-    gulp: gulp,
-    plugins: plugins,
-    isBuild: process.argv.includes(buildFlag),
-    isDev: !process.argv.includes(buildFlag),
-}
+import { path, gulp } from "./gulp/config/index.js";
 
 function watcher() {
     gulp.watch(path.watch.files, copy);
