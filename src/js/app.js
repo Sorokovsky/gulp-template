@@ -1,2 +1,3 @@
-import { isWebp } from "./modules/functions.js";
+import { enableMobileMenu, isWebp } from "./modules/index.js";
 isWebp();
+enableMobileMenu();

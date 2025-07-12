@@ -4,7 +4,7 @@ import ttf2woff2 from "gulp-ttf2woff2";
 import { gulp, path, plugins } from "../config/index.js";
 
 export const otfToTtf = () => {
-    return gulp.src(`${path.srcFolder}/fonts/*.otf`, {})
+    return gulp.src(`${path.srcFolder}/fonts/*.otf`, {encoding: false})
         .pipe(plugins.plumber(
             plugins.notify.onError({
                 title: "Fonts",
@@ -18,7 +18,7 @@ export const otfToTtf = () => {
 };
 
 export const ttfToWoff = () => {
-    return gulp.src(`${path.srcFolder}/fonts/*.ttf`, {})
+    return gulp.src(`${path.srcFolder}/fonts/*.ttf`, {encoding: false})
         .pipe(plugins.plumber(
             plugins.notify.onError({
                 title: "Fonts",
@@ -29,9 +29,11 @@ export const ttfToWoff = () => {
             formats: ["woff"]
         }))
         .pipe(gulp.dest(path.build.fonts))
-        .pipe(gulp.src(`${path.srcFolder}/fonts/*.ttf`))
-        .pipe(ttf2woff2())
-        .pipe(gulp.dest(path.build.fonts));
+        .on('end', () => {
+            gulp.src(`${path.srcFolder}/fonts/*.ttf`, {encoding: false})
+                .pipe(ttf2woff2())
+                .pipe(gulp.dest(path.build.fonts));
+        });
 };
 
 export const fontsStyle = () => {
