@@ -2,6 +2,7 @@ import fileinclude from "gulp-file-include";
 import webpHtmlNosvg from "gulp-webp-html-nosvg";
 import versionNumber from "gulp-version-number";
 import { gulp, path, isBuild, plugins } from "../config/index.js";
+import pug from "gulp-pug";
 
 export const html = () => {
     return gulp.src(path.src.html)
@@ -12,6 +13,9 @@ export const html = () => {
             })
         ))
         .pipe(fileinclude())
+        .pipe(pug({
+            pretty: "\t"
+        }))
         .pipe(plugins.replace(/@img\//g, "img/"))
         .pipe(plugins.if(isBuild, webpHtmlNosvg()))
         .pipe(
