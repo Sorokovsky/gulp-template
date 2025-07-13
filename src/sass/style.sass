@@ -1,3 +1,7 @@
+@use "mixins/index" as *
 @use "fonts";
 @use "base"
 @use "header"
+h1
+    text-align: center
+    @include adaptiveValue("padding-top", 60, 20)

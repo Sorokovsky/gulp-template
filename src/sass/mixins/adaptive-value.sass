@@ -1,0 +1,14 @@
+@use "../settings" as *
+@mixin adaptiveValue($property, $fromSize, $toSize, $type: 0, $maxSize: 100vw, $minSize: 320)
+    $addSize: $fromSize - $toSize
+    $maxWidthContainer: $containerWidth + $verticalContainerPadding * 2
+    @if $type == 1
+        #{$property}: $fromSize + px
+        @media screen and ( max-width: $maxWidthContainer + px)
+            #{$property}: calc(#{$toSize + px} + #{$addSize} * (($maxSize - #{$minSize}px) / #{$maxWidthContainer - $minSize}))
+    @else if $type == 2
+        #{$property}: $fromSize + px
+        @media screen and ( min-width: #{$maxWidthContainer + px})
+            #{$property}: calc(#{$toSize + px} + #{$addSize} * (($maxSize - #{$minSize}px) / #{$maxWidth - $minSize}))
+    @else
+        #{$property}: calc(#{$toSize + px} + #{$addSize} * (($maxSize - #{$minSize}px) / #{$maxWidth - $minSize}))
