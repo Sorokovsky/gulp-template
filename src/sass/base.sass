@@ -13,7 +13,8 @@ body
     font-weight: $mainFontWeight
     font-style: $mainFontStyle
     &._lock
-        overflow-y: hidden
+        @media (max-width: $mobileBreakPoint+px)
+            overflow-y: hidden
 main
     flex: 1 0 auto
 img, video
