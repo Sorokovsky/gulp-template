@@ -41,7 +41,7 @@ export const fontsStyle = () => {
     fs.readdir(path.build.fonts, function (err, fontsFiles) {
         if (fontsFiles) {
             if (!fs.existsSync(fontsFile)) {
-                fs.writeFile(fontsFile, "", cb);
+                fs.writeFile(fontsFile, "@use 'mixins/index' as *", cb);
                 let newFileOnly;
                 for (let i = 0; i < fontsFiles.length; i++) {
                     let fontFileName = fontsFiles[i].split(".")[0];
@@ -49,7 +49,7 @@ export const fontsStyle = () => {
                         let fontName = fontFileName.split("-")[0] ? fontFileName.split("-")[0] : fontFileName;
                         let fontWeight = (fontFileName.split("-")[1] ? fontFileName.split("-")[1] : fontFileName).toLowerCase();
                         let italic = "italic";
-                        let normal = "normail";
+                        let normal = "normal";
                         let fontStyle = fontWeight.includes(italic) ? italic : normal;
                         fontWeight.replace(italic, "");
                         switch (fontWeight) {
@@ -82,7 +82,7 @@ export const fontsStyle = () => {
                                 fontWeight = 400;
                                 break;
                         }
-                        fs.appendFile(fontsFile, `@font-face\n\tfont-family: ${fontName}\n\tfont-display: swap\n\tsrc: url("../fonts/${fontFileName}.woff2") format("woff2"), url("../fonts/${fontFileName}.woff") format("woff")\n\tfont-weight: ${fontWeight}\n\tfont-style: ${fontStyle}\n\r\n`, cb);
+                        fs.appendFile(fontsFile, `\n@include font("${fontName}", "${fontFileName}", ${fontWeight}, ${fontStyle})`, cb);
                         newFileOnly = fontFileName;
                     } else {
                         console.log("fonts.sass already exits.");
